@@ -2,8 +2,39 @@ import random
 import numpy as np
 import math
 
+#SIMULATOR BASIC 1
+        #to do: OT betting, AH
+
+
+'''
+
+ODDS:
+
+To win (incl. OT):
+
+HOU 1.93
+DAL 1.97
+
+
+
+Match Total (incl. OT):
+
+179,5 U 8.00 | O 1.10
+189,5 U 4.30 | O 1.25
+199,5 U 2.75 | O 1.50
+204,5 U 2.25 | O 1.70
+209,5 U 1.93 | O 1.97
+214,5 U 1.70 | O 2.25
+219,5 U 1.50 | O 2.75
+229,5 U 1.25 | O 4.30
+239,5 U 1.11 | O 7.75
+249,5 U 1.05 | O 14.00
+
+'''
+
 Hou_wins = Dal_wins = 0
 quiet_sim = False
+odd_gen = False
 
 # SIMULATOR BASIC 1
 
@@ -15,9 +46,9 @@ hatt_2p = 0.38
 hatt_3ft = 0.02
 hatt_2ft = 0.1
 
-h3ptacc = 0.343
-h2ptacc = 0.558
-hftacc = 0.795
+#h3ptacc = np.random.normal(0.343,0.069)
+#h2ptacc = np.random.normal(0.558,0.112)
+#hftacc = np.random.normal(0.795,0.159)
 
 havg_poss = 108.2
 hsigma = 4
@@ -31,9 +62,9 @@ aatt_2p = 0.5
 aatt_3ft = 0.02
 aatt_2ft = 0.1
 
-a3ptacc = 0.362
-a2ptacc = 0.551
-aftacc = 0.780
+#a3ptacc = np.random.normal(0.362,0.072)
+#a2ptacc = np.random.normal(0.551,0.110)
+#aftacc = np.random.normal(0.780,0.156)
 
 aavg_poss = 103.6
 asigma = 4
@@ -43,6 +74,14 @@ aturnov = 0.122
 def sim(home_name='HOU', away_name='DAL'):
     global Home_pts, Away_pts, Home_numb_poss
     global OT_no, is_draw
+
+    h3ptacc = np.random.normal(0.343,0.069)
+    h2ptacc = np.random.normal(0.558,0.112)
+    hftacc = np.random.normal(0.795,0.159)
+
+    a3ptacc = np.random.normal(0.362,0.072)
+    a2ptacc = np.random.normal(0.551,0.110)
+    aftacc = np.random.normal(0.780,0.156)
     
     # Basic result variables
     Home_pts = Away_pts = 0
@@ -266,6 +305,11 @@ def sim(home_name='HOU', away_name='DAL'):
                     Away_turnovers += 1
                     
             if Home_pts != Away_pts:
+                if Home_pts > Away_pts:
+                    Hou_wins += 1
+                else:
+                    Dal_wins += 1
+                
                 is_draw = 0
                 Draws -= 1
                 if max_numb_OT == OT_no:
@@ -294,6 +338,10 @@ def multisim(number):
     Hou_max = Dal_max = 0
     Hou_min = Dal_min = 200
     max_numb_OT = 0
+
+    sum_pts = 0
+    o209 = o179 = o189 = o199 = o204 = o214 = o219 = o229 = o239 = o249 = 0
+    
     for i in range(number):
         global Home_pts, Away_pts
         
@@ -309,6 +357,80 @@ def multisim(number):
             Hou_min = Home_pts
         if Away_pts < Dal_min:
             Dal_min = Away_pts
+
+        pts_this_game = Home_pts + Away_pts
+        sum_pts += pts_this_game
+
+        if pts_this_game >= 180:
+            o179 += 1
+        if pts_this_game >= 190:
+            o189 += 1
+        if pts_this_game >= 200:
+            o199 += 1
+        if pts_this_game >= 205:
+            o204 += 1
+        if pts_this_game >= 210:
+            o209 += 1
+        if pts_this_game >= 215:
+            o214 += 1
+        if pts_this_game >= 220:
+            o219 += 1
+        if pts_this_game >= 230:
+            o229 += 1
+        if pts_this_game >= 240:
+            o239 += 1
+        if pts_this_game >= 250:
+            o249 += 1
+
+            
+    avg_pts = sum_pts/number
+
+    perc_o179 = (o179 /number)*100
+    perc_o189 = (o189 /number)*100
+    perc_o199 = (o199 /number)*100
+    perc_o204 = (o204 /number)*100
+    perc_o209 = (o209 /number)*100
+    perc_o214 = (o214 /number)*100
+    perc_o219 = (o219 /number)*100
+    perc_o229 = (o229 /number)*100
+    perc_o239 = (o239 /number)*100
+    perc_o249 = (o249 /number)*100
+
+    odd_o179 = round(1+(0.95*((100/perc_o179)-1)),2)
+    odd_o189 = round(1+(0.95*((100/perc_o189)-1)),2)
+    odd_o199 = round(1+(0.95*((100/perc_o199)-1)),2)
+    odd_o204 = round(1+(0.95*((100/perc_o204)-1)),2)
+    odd_o209 = round(1+(0.95*((100/perc_o209)-1)),2)
+    odd_o214 = round(1+(0.95*((100/perc_o214)-1)),2)
+    odd_o219 = round(1+(0.95*((100/perc_o219)-1)),2)
+    odd_o229 = round(1+(0.95*((100/perc_o229)-1)),2)
+    odd_o239 = round(1+(0.95*((100/perc_o239)-1)),2)
+    odd_o249 = round(1+(0.95*((100/perc_o249)-1)),2)
+
+    dd_u180 = (100/(100-perc_o179))
+    dd_u190 = round((100/(100-perc_o189)),2)
+    dd_u200 = round((100/(100-perc_o199)),2)
+    dd_u205 = round((100/(100-perc_o204)),2)
+    dd_u210 = round((100/(100-perc_o209)),2)
+    dd_u215 = round((100/(100-perc_o214)),2)
+    dd_u220 = round((100/(100-perc_o219)),2)
+    dd_u230 = round((100/(100-perc_o229)),2)
+    dd_u240 = round((100/(100-perc_o239)),2)
+    dd_u250 = round((100/(100-perc_o249)),2)
+
+    odd_u180 = round(1+(0.95*(dd_u180-1)),2)
+    odd_u190 = round(1+(0.95*(dd_u190-1)),2)
+    odd_u200 = round(1+(0.95*(dd_u200-1)),2)
+    odd_u205 = round(1+(0.95*(dd_u205-1)),2)
+    odd_u210 = round(1+(0.95*(dd_u210-1)),2)
+    odd_u215 = round(1+(0.95*(dd_u215-1)),2)
+    odd_u220 = round(1+(0.95*(dd_u220-1)),2)
+    odd_u230 = round(1+(0.95*(dd_u230-1)),2)
+    odd_u240 = round(1+(0.95*(dd_u240-1)),2)
+    odd_u250 = round(1+(0.95*(dd_u250-1)),2)
+
+    
+        
             
     print ('')
     print ('HOU %s, DAL %s, draw %s' % (Hou_wins, Dal_wins, Draws))
@@ -316,17 +438,38 @@ def multisim(number):
     print ('HOU max: %s, HOU min: %s' % (Hou_max, Hou_min))
     print ('DAL max: %s, DAL min: %s' % (Dal_max, Dal_min))
     print ('Most OTs: %s while the end score was %s : %s' % (max_numb_OT, most_OT_home, most_OT_away))
+    print ('Avg points pg: %s' % avg_pts)
+    if odd_gen == True:
+        print ('179,5 u%s  o%s   189,5 u%s o%s   199,5 u%s o%s   204,5 u%s o%s   209,5 u%s o%s   214,5 u%s o%s   219,5 u%s o%s   229,5 u%s o%s   239,5 u%s o%s   249,5 u%s o%s' %
+               (odd_u180,odd_o179,odd_u190,odd_o189,odd_u200,odd_o199,odd_u205,odd_o204,odd_u210,odd_o209,odd_u215,odd_o214,odd_u220,odd_o219,odd_u230,odd_o229,odd_u240,odd_o239,odd_u250,odd_o249))
+    
     quiet_sim = False
     
     
-def multi_sim2(number):
-    for i in range(number):
-        sim()
-    print (Hou_wins)
 
+#Monte Carlo 1m:
+    
+    #Avg points pg: 209.485996
+    
+    #HOU 505414, DAL 494586, draw 0
+    
+    #HOU max: 198, HOU min: 29
+    #DAL max: 201, DAL min: 31
 
+#Monte Carlo 10m @0.05 margin:
+    
+    #Avg points pg: 209.5538546
+
+    #HOU 5047863, DAL 4952137, draw 0
+
+    #HOU max: 209, HOU min: 25
+    #DAL max: 200, DAL min: 22
+
+    #Most OTs: 5 while the end score was 144 : 143
         
-
+#179,5 u7.99  o1.13   189,5 u4.39 o1.27   199,5 u2.75 o1.52
+#204,5 u2.27 o1.71   209,5 u1.93 o1.97   214,5 u1.68 o2.32
+#219,5 u1.5 o2.8   229,5 u1.27 o4.43   239,5 u1.13 o7.83   249,5 u1.07 o15.52
         
 
         
