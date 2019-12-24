@@ -6,6 +6,8 @@ import math
         #to do: OT betting, AH
 
 
+
+
 '''
 
 ODDS:
@@ -32,7 +34,32 @@ Match Total (incl. OT):
 
 '''
 
-Hou_wins = Dal_wins = 0
+
+
+print('ODDS:')
+print('')
+print('To win (incl. OT): ')
+print('')
+print('HOU 1.93')
+print('DAL 1.97')
+print('')
+print('Match Total (incl. OT):')
+print('')
+print('179,5 U 8.00 | O 1.10')
+print('189,5 U 4.30 | O 1.25')
+print('199,5 U 2.75 | O 1.50')
+print('204,5 U 2.25 | O 1.70')
+print('209,5 U 1.93 | O 1.97')
+print('214,5 U 1.70 | O 2.25')
+print('219,5 U 1.50 | O 2.75')
+print('229,5 U 1.25 | O 4.30')
+print('239,5 U 1.11 | O 7.75')
+print('249,5 U 1.05 | O 14.00')
+
+
+
+
+Hou_wins = Dal_wins = Draws = max_numb_OT = 0
 quiet_sim = False
 odd_gen = False
 
@@ -70,6 +97,7 @@ aavg_poss = 103.6
 asigma = 4
 
 aturnov = 0.122
+
 
 def sim(home_name='HOU', away_name='DAL'):
     global Home_pts, Away_pts, Home_numb_poss
@@ -320,6 +348,8 @@ def sim(home_name='HOU', away_name='DAL'):
     if quiet_sim == False:
         print ('')
         print ('%s %s : %s %s' %(home_name, Home_pts, Away_pts, away_name))
+        if OT_no > 0:
+            print ('after %s overtime(s)' % OT_no)
         print ('')
         print ('%s %s/%s 3pt, %s/%s 2pt, %s/%s ft, %s turnovers' %
                (home_name, Home_3pt_scored, Home_3pt_attempted, Home_2pt_scored, Home_2pt_attempted,
