@@ -2,7 +2,8 @@ import random
 import numpy as np
 import math
 
-#SIMULATOR BASIC 1.2
+#SIMULATOR BASIC 1.3
+        #new: biggest wins
         #to do: OT betting, AH
 
 
@@ -99,9 +100,15 @@ asigma = 4
 aturnov = 0.122
 
 
+Hou_ez = Dal_ez = -100
+diff = Hou_ez_Hou = Hou_ez_Dal = Dal_ez_Hou = Dal_ez_Dal = 0
+
+
+
 def sim(home_name='HOU', away_name='DAL'):
     global Home_pts, Away_pts, Home_numb_poss
     global OT_no, is_draw
+    global Hou_ez, Dal_ez, Hou_ez_Hou, Hou_ez_Dal, Dal_ez_Hou, Dal_ez_Dal, diff
 
     h3ptacc = np.random.normal(0.343,0.069)
     h2ptacc = np.random.normal(0.558,0.112)
@@ -224,14 +231,24 @@ def sim(home_name='HOU', away_name='DAL'):
     global quiet_sim
     global max_numb_OT
     global most_OT_home, most_OT_away
-    
+
     if Home_pts > Away_pts:
         Hou_wins += 1
+        diff = Home_pts - Away_pts
+        if diff > Hou_ez:
+            Hou_ez = diff
+            Hou_ez_Hou = Home_pts
+            Hou_ez_Dal = Away_pts
     elif Home_pts == Away_pts:
         Draws += 1
         is_draw = 1
     elif Away_pts > Home_pts:
         Dal_wins += 1
+        diff = Away_pts - Home_pts
+        if diff > Dal_ez:
+            Dal_ez = diff
+            Dal_ez_Dal = Away_pts
+            Dal_ez_Hou = Home_pts
 
     if is_draw == 1:   
         while is_draw == 1:
@@ -335,8 +352,18 @@ def sim(home_name='HOU', away_name='DAL'):
             if Home_pts != Away_pts:
                 if Home_pts > Away_pts:
                     Hou_wins += 1
+                    diff = Home_pts - Away_pts
+                    if diff > Hou_ez:
+                        Hou_ez = diff
+                        Hou_ez_Hou = Home_pts
+                        Hou_ez_Dal = Away_pts
                 else:
                     Dal_wins += 1
+                    diff = Away_pts - Home_pts
+                    if diff > Dal_ez:
+                        Dal_ez = diff
+                        Dal_ez_Dal = Away_pts
+                        Dal_ez_Hou = Home_pts
                 
                 is_draw = 0
                 Draws -= 1
@@ -361,14 +388,23 @@ def sim(home_name='HOU', away_name='DAL'):
 
 most_OT_home = most_OT_away = max_numb_OT = 0
 
+
+
+
+
+
 def multisim(number):
     global Hou_wins, Dal_wins, Draws
     global Hou_max, Dal_max, Hou_min, Dal_min
     global max_numb_OT, most_OT_home, most_OT_away
+    global Hou_ez, Dal_ez, diff, Hou_ez_Hou, Hou_ez_Dal, Dal_ez_Hou, Dal_ez_Dal
     Hou_wins = Dal_wins = Draws = 0
     Hou_max = Dal_max = 0
     Hou_min = Dal_min = 200
     max_numb_OT = 0
+
+    Hou_ez = Dal_ez = -100
+    diff = Hou_ez_Hou = Hou_ez_Dal = Dal_ez_Hou = Dal_ez_Dal = 0
 
     sum_pts = 0
     o209 = o179 = o189 = o199 = o204 = o214 = o219 = o229 = o239 = o249 = 0
@@ -465,14 +501,21 @@ def multisim(number):
     print ('')
     print ('HOU %s, DAL %s, draw %s' % (Hou_wins, Dal_wins, Draws))
     print ('')
+    print (' ')
     print ('HOU max: %s, HOU min: %s' % (Hou_max, Hou_min))
     print ('DAL max: %s, DAL min: %s' % (Dal_max, Dal_min))
+    print (' ')
+    print ('HOU biggest win: +%s  (%s : %s)' % (Hou_ez,Hou_ez_Hou, Hou_ez_Dal))
+    print ('DAL biggest win: +%s  (%s : %s)' % (Dal_ez, Dal_ez_Hou, Dal_ez_Dal))
+    print (' ')
+    
     if max_numb_OT > 0:
         print ('Most OTs: %s, while the end score was %s : %s' % (max_numb_OT, most_OT_home, most_OT_away))
     #print ('Avg points pg: %s' % avg_pts)
     if odd_gen == True:
         print ('179,5 u%s  o%s   189,5 u%s o%s   199,5 u%s o%s   204,5 u%s o%s   209,5 u%s o%s   214,5 u%s o%s   219,5 u%s o%s   229,5 u%s o%s   239,5 u%s o%s   249,5 u%s o%s' %
                (odd_u180,odd_o179,odd_u190,odd_o189,odd_u200,odd_o199,odd_u205,odd_o204,odd_u210,odd_o209,odd_u215,odd_o214,odd_u220,odd_o219,odd_u230,odd_o229,odd_u240,odd_o239,odd_u250,odd_o249))
+    print (' ')
     
     quiet_sim = False
     
