@@ -2,7 +2,7 @@ import random
 import numpy as np
 import math
 
-#SIMULATOR BASIC 1
+#SIMULATOR BASIC 1.2
         #to do: OT betting, AH
 
 
@@ -415,52 +415,51 @@ def multisim(number):
 
             
     avg_pts = sum_pts/number
+    if odd_gen == True:
+        perc_o179 = (o179 /number)*100
+        perc_o189 = (o189 /number)*100
+        perc_o199 = (o199 /number)*100
+        perc_o204 = (o204 /number)*100
+        perc_o209 = (o209 /number)*100
+        perc_o214 = (o214 /number)*100
+        perc_o219 = (o219 /number)*100
+        perc_o229 = (o229 /number)*100
+        perc_o239 = (o239 /number)*100
+        perc_o249 = (o249 /number)*100
 
-    perc_o179 = (o179 /number)*100
-    perc_o189 = (o189 /number)*100
-    perc_o199 = (o199 /number)*100
-    perc_o204 = (o204 /number)*100
-    perc_o209 = (o209 /number)*100
-    perc_o214 = (o214 /number)*100
-    perc_o219 = (o219 /number)*100
-    perc_o229 = (o229 /number)*100
-    perc_o239 = (o239 /number)*100
-    perc_o249 = (o249 /number)*100
+        odd_o179 = round(1+(0.95*((100/perc_o179)-1)),2)
+        odd_o189 = round(1+(0.95*((100/perc_o189)-1)),2)
+        odd_o199 = round(1+(0.95*((100/perc_o199)-1)),2)
+        odd_o204 = round(1+(0.95*((100/perc_o204)-1)),2)
+        odd_o209 = round(1+(0.95*((100/perc_o209)-1)),2)
+        odd_o214 = round(1+(0.95*((100/perc_o214)-1)),2)
+        odd_o219 = round(1+(0.95*((100/perc_o219)-1)),2)
+        odd_o229 = round(1+(0.95*((100/perc_o229)-1)),2)
+        odd_o239 = round(1+(0.95*((100/perc_o239)-1)),2)
+        odd_o249 = round(1+(0.95*((100/perc_o249)-1)),2)
 
-    odd_o179 = round(1+(0.95*((100/perc_o179)-1)),2)
-    odd_o189 = round(1+(0.95*((100/perc_o189)-1)),2)
-    odd_o199 = round(1+(0.95*((100/perc_o199)-1)),2)
-    odd_o204 = round(1+(0.95*((100/perc_o204)-1)),2)
-    odd_o209 = round(1+(0.95*((100/perc_o209)-1)),2)
-    odd_o214 = round(1+(0.95*((100/perc_o214)-1)),2)
-    odd_o219 = round(1+(0.95*((100/perc_o219)-1)),2)
-    odd_o229 = round(1+(0.95*((100/perc_o229)-1)),2)
-    odd_o239 = round(1+(0.95*((100/perc_o239)-1)),2)
-    odd_o249 = round(1+(0.95*((100/perc_o249)-1)),2)
+        dd_u180 = (100/(100-perc_o179))
+        dd_u190 = round((100/(100-perc_o189)),2)
+        dd_u200 = round((100/(100-perc_o199)),2)
+        dd_u205 = round((100/(100-perc_o204)),2)
+        dd_u210 = round((100/(100-perc_o209)),2)
+        dd_u215 = round((100/(100-perc_o214)),2)
+        dd_u220 = round((100/(100-perc_o219)),2)
+        dd_u230 = round((100/(100-perc_o229)),2)
+        dd_u240 = round((100/(100-perc_o239)),2)
+        dd_u250 = round((100/(100-perc_o249)),2)
 
-    dd_u180 = (100/(100-perc_o179))
-    dd_u190 = round((100/(100-perc_o189)),2)
-    dd_u200 = round((100/(100-perc_o199)),2)
-    dd_u205 = round((100/(100-perc_o204)),2)
-    dd_u210 = round((100/(100-perc_o209)),2)
-    dd_u215 = round((100/(100-perc_o214)),2)
-    dd_u220 = round((100/(100-perc_o219)),2)
-    dd_u230 = round((100/(100-perc_o229)),2)
-    dd_u240 = round((100/(100-perc_o239)),2)
-    dd_u250 = round((100/(100-perc_o249)),2)
-
-    odd_u180 = round(1+(0.95*(dd_u180-1)),2)
-    odd_u190 = round(1+(0.95*(dd_u190-1)),2)
-    odd_u200 = round(1+(0.95*(dd_u200-1)),2)
-    odd_u205 = round(1+(0.95*(dd_u205-1)),2)
-    odd_u210 = round(1+(0.95*(dd_u210-1)),2)
-    odd_u215 = round(1+(0.95*(dd_u215-1)),2)
-    odd_u220 = round(1+(0.95*(dd_u220-1)),2)
-    odd_u230 = round(1+(0.95*(dd_u230-1)),2)
-    odd_u240 = round(1+(0.95*(dd_u240-1)),2)
-    odd_u250 = round(1+(0.95*(dd_u250-1)),2)
-
-    
+        odd_u180 = round(1+(0.95*(dd_u180-1)),2)
+        odd_u190 = round(1+(0.95*(dd_u190-1)),2)
+        odd_u200 = round(1+(0.95*(dd_u200-1)),2)
+        odd_u205 = round(1+(0.95*(dd_u205-1)),2)
+        odd_u210 = round(1+(0.95*(dd_u210-1)),2)
+        odd_u215 = round(1+(0.95*(dd_u215-1)),2)
+        odd_u220 = round(1+(0.95*(dd_u220-1)),2)
+        odd_u230 = round(1+(0.95*(dd_u230-1)),2)
+        odd_u240 = round(1+(0.95*(dd_u240-1)),2)
+        odd_u250 = round(1+(0.95*(dd_u250-1)),2)
+   
         
             
     print ('')
@@ -509,7 +508,7 @@ while continue_sim == True:
 	print(' ')
 	g = int(input('How many simulations do you want to generate? ')) 
 
-	if g < 20:
+	if g < 10:
 		for i in range(g):
 			sim(g)
 			print(' ')		    
@@ -518,3 +517,4 @@ while continue_sim == True:
 		multisim(g)
       
               
+            
