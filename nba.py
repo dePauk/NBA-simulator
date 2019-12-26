@@ -468,7 +468,7 @@ def multisim(number):
     print ('HOU max: %s, HOU min: %s' % (Hou_max, Hou_min))
     print ('DAL max: %s, DAL min: %s' % (Dal_max, Dal_min))
     if max_numb_OT > 0:
-    	print ('Most OTs: %s while the end score was %s : %s' % (max_numb_OT, most_OT_home, most_OT_away))
+        print ('Most OTs: %s, while the end score was %s : %s' % (max_numb_OT, most_OT_home, most_OT_away))
     #print ('Avg points pg: %s' % avg_pts)
     if odd_gen == True:
         print ('179,5 u%s  o%s   189,5 u%s o%s   199,5 u%s o%s   204,5 u%s o%s   209,5 u%s o%s   214,5 u%s o%s   219,5 u%s o%s   229,5 u%s o%s   239,5 u%s o%s   249,5 u%s o%s' %
@@ -505,16 +505,20 @@ def multisim(number):
 continue_sim = True
 
 while continue_sim == True:
-	print(' ')
-	g = int(input('How many simulations do you want to generate? ')) 
+    print(' ')
+    g = int(input('How many simulations do you want to generate? '))
+    print(' ')
 
-	if g < 10:
-		for i in range(g):
-			sim(g)
-			print(' ')		    
-			
-	else:
-		multisim(g)
-      
-              
+    if g < 10:
+        for i in range(g):
+            sim()
+            print(' ')
+            print(' ')
+
+    else:
+        multisim(g)
+            
+
+          
+         
             
