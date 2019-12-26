@@ -359,6 +359,7 @@ def sim(home_name='HOU', away_name='DAL'):
                Away_ft_scored, Away_ft_attempted, Away_turnovers))
     pass
 
+most_OT_home = most_OT_away = max_numb_OT = 0
 
 def multisim(number):
     global Hou_wins, Dal_wins, Draws
@@ -467,8 +468,9 @@ def multisim(number):
     print ('')
     print ('HOU max: %s, HOU min: %s' % (Hou_max, Hou_min))
     print ('DAL max: %s, DAL min: %s' % (Dal_max, Dal_min))
-    print ('Most OTs: %s while the end score was %s : %s' % (max_numb_OT, most_OT_home, most_OT_away))
-    print ('Avg points pg: %s' % avg_pts)
+    if max_numb_OT > 0:
+    	print ('Most OTs: %s while the end score was %s : %s' % (max_numb_OT, most_OT_home, most_OT_away))
+    #print ('Avg points pg: %s' % avg_pts)
     if odd_gen == True:
         print ('179,5 u%s  o%s   189,5 u%s o%s   199,5 u%s o%s   204,5 u%s o%s   209,5 u%s o%s   214,5 u%s o%s   219,5 u%s o%s   229,5 u%s o%s   239,5 u%s o%s   249,5 u%s o%s' %
                (odd_u180,odd_o179,odd_u190,odd_o189,odd_u200,odd_o199,odd_u205,odd_o204,odd_u210,odd_o209,odd_u215,odd_o214,odd_u220,odd_o219,odd_u230,odd_o229,odd_u240,odd_o239,odd_u250,odd_o249))
@@ -500,10 +502,19 @@ def multisim(number):
 #179,5 u7.99  o1.13   189,5 u4.39 o1.27   199,5 u2.75 o1.52
 #204,5 u2.27 o1.71   209,5 u1.93 o1.97   214,5 u1.68 o2.32
 #219,5 u1.5 o2.8   229,5 u1.27 o4.43   239,5 u1.13 o7.83   249,5 u1.07 o15.52
-        
+    
+continue_sim = True
 
-        
-        
+while continue_sim == True:
+	print(' ')
+	g = int(input('How many simulations do you want to generate? ')) 
+
+	if g < 20:
+		for i in range(g):
+			sim(g)
+			print(' ')		    
+			
+	else:
+		multisim(g)
       
-        
-        
+              
