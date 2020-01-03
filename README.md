@@ -26,3 +26,8 @@ __Match Total (incl. OT):__
 229,5  U 1.25 | O 4.30 <br/>
 239,5  U 1.11 | O 7.75 <br/>
 249,5  U 1.05 | O 14.00 <br/>
+
+__Player Points (incl. OT):__
+
+Luka Doncic 33,5 <br/>
+U 1.91 | O 1.90

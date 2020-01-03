@@ -2,9 +2,9 @@ import random
 import numpy as np
 import math
 
-#SIMULATOR BASIC 1.3
-        #new: biggest wins
-        #to do: OT betting, AH
+#SIMULATOR BASIC 1.3.1
+        #new: Doncic pts primitive
+        #to do: OT betting, AH, all teams, player betting
 
 
 
@@ -33,6 +33,13 @@ Match Total (incl. OT):
 239,5 U 1.11 | O 7.75
 249,5 U 1.05 | O 14.00
 
+
+
+Player Points (incl. OT):
+
+Luka Doncic 33,5
+U 1.91 | O 1.90 
+
 '''
 
 
@@ -56,7 +63,11 @@ print('219,5 U 1.50 | O 2.75')
 print('229,5 U 1.25 | O 4.30')
 print('239,5 U 1.11 | O 7.75')
 print('249,5 U 1.05 | O 14.00')
-
+print('')
+print('Player Points (incl. OT):')
+print('')
+print('Luka Doncic 33,5')
+print('U 1.91 | O 1.90')
 
 
 
@@ -64,7 +75,6 @@ Hou_wins = Dal_wins = Draws = max_numb_OT = 0
 quiet_sim = False
 odd_gen = False
 
-# SIMULATOR BASIC 1
 
 
 # Home team default (HOUSTON)
@@ -103,12 +113,18 @@ aturnov = 0.122
 Hou_ez = Dal_ez = -100
 diff = Hou_ez_Hou = Hou_ez_Dal = Dal_ez_Hou = Dal_ez_Dal = 0
 
+doncic_avg = 0.32
+doncic_sigma = 0.05
+
+doncic_max_pts = 0
 
 
 def sim(home_name='HOU', away_name='DAL'):
     global Home_pts, Away_pts, Home_numb_poss
     global OT_no, is_draw
     global Hou_ez, Dal_ez, Hou_ez_Hou, Hou_ez_Dal, Dal_ez_Hou, Dal_ez_Dal, diff
+    global doncic_pts, doncic_max_pts
+
 
     h3ptacc = np.random.normal(0.343,0.069)
     h2ptacc = np.random.normal(0.558,0.112)
@@ -370,6 +386,13 @@ def sim(home_name='HOU', away_name='DAL'):
                 if max_numb_OT == OT_no:
                     most_OT_home = Home_pts
                     most_OT_away = Away_pts
+
+    doncic_pts = math.floor((np.random.normal(doncic_avg, doncic_sigma))*Away_pts)
+    if doncic_pts < 0:
+        doncic_pts = 0
+
+    if doncic_pts > doncic_max_pts:
+        doncic_max_pts = doncic_pts
            
     
     if quiet_sim == False:
@@ -384,6 +407,8 @@ def sim(home_name='HOU', away_name='DAL'):
         print ('%s %s/%s 3pt, %s/%s 2pt, %s/%s ft, %s turnovers' %
                (away_name, Away_3pt_scored, Away_3pt_attempted, Away_2pt_scored, Away_2pt_attempted,
                Away_ft_scored, Away_ft_attempted, Away_turnovers))
+        print ('Doncic %s pts' % (doncic_pts))
+        
     pass
 
 most_OT_home = most_OT_away = max_numb_OT = 0
@@ -398,10 +423,12 @@ def multisim(number):
     global Hou_max, Dal_max, Hou_min, Dal_min
     global max_numb_OT, most_OT_home, most_OT_away
     global Hou_ez, Dal_ez, diff, Hou_ez_Hou, Hou_ez_Dal, Dal_ez_Hou, Dal_ez_Dal
+    global doncic_pts, doncic_max_pts
     Hou_wins = Dal_wins = Draws = 0
     Hou_max = Dal_max = 0
     Hou_min = Dal_min = 200
     max_numb_OT = 0
+    doncic_max_pts = 0
 
     Hou_ez = Dal_ez = -100
     diff = Hou_ez_Hou = Hou_ez_Dal = Dal_ez_Hou = Dal_ez_Dal = 0
@@ -507,6 +534,7 @@ def multisim(number):
     print (' ')
     print ('HOU biggest win: +%s  (%s : %s)' % (Hou_ez,Hou_ez_Hou, Hou_ez_Dal))
     print ('DAL biggest win: +%s  (%s : %s)' % (Dal_ez, Dal_ez_Hou, Dal_ez_Dal))
+    print ('Doncic max %s pts' % (doncic_max_pts))
     print (' ')
     
     if max_numb_OT > 0:

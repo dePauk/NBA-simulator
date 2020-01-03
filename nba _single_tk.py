@@ -1,6 +1,7 @@
 import random
 import numpy as np
 import math
+import tkinter as tk
 
 #SIMULATOR BASIC 1.3
         #new: biggest wins
@@ -103,9 +104,10 @@ aturnov = 0.122
 Hou_ez = Dal_ez = -100
 diff = Hou_ez_Hou = Hou_ez_Dal = Dal_ez_Hou = Dal_ez_Dal = 0
 
-
+global home_name, away_name
 
 def sim(home_name='HOU', away_name='DAL'):
+
     global Home_pts, Away_pts, Home_numb_poss
     global OT_no, is_draw
     global Hou_ez, Dal_ez, Hou_ez_Hou, Hou_ez_Dal, Dal_ez_Hou, Dal_ez_Dal, diff
@@ -544,6 +546,183 @@ def multisim(number):
 #179,5 u7.99  o1.13   189,5 u4.39 o1.27   199,5 u2.75 o1.52
 #204,5 u2.27 o1.71   209,5 u1.93 o1.97   214,5 u1.68 o2.32
 #219,5 u1.5 o2.8   229,5 u1.27 o4.43   239,5 u1.13 o7.83   249,5 u1.07 o15.52
+
+
+
+
+current_gen_no = 1
+all_the_stats = "Currently only console output"
+
+def visual_refresh():
+    visual_number['text'] = str(current_gen_no)
+
+
+def result_visual_refresh():
+    global home_name, Home_pts, Away_pts, away_name
+    show_result['text'] = str(all_the_stats)
+                            
+
+def sim_stats():
+    all_the_stats = "%s " % Home_pts
+
+
+
+##        print ('')
+##        print ('%s %s : %s %s' %(home_name, Home_pts, Away_pts, away_name))
+##        if OT_no > 0:
+##            print ('after %s overtime(s)' % OT_no)
+##        print ('')
+##        print ('%s %s/%s 3pt, %s/%s 2pt, %s/%s ft, %s turnovers' %
+##               (home_name, Home_3pt_scored, Home_3pt_attempted, Home_2pt_scored, Home_2pt_attempted,
+##               Home_ft_scored, Home_ft_attempted, Home_turnovers))
+##        print ('%s %s/%s 3pt, %s/%s 2pt, %s/%s ft, %s turnovers' %
+##               (away_name, Away_3pt_scored, Away_3pt_attempted, Away_2pt_scored, Away_2pt_attempted,
+##               Away_ft_scored, Away_ft_attempted, Away_turnovers))
+
+
+    
+
+
+def plus1gen():
+    global current_gen_no
+    current_gen_no += 1
+    visual_refresh()
+
+def plus10gen():
+    global current_gen_no
+    current_gen_no += 10
+    visual_refresh()
+    
+def plus100gen():
+    global current_gen_no
+    current_gen_no += 100
+    visual_refresh()
+
+def plus1kgen():
+    global current_gen_no
+    current_gen_no += 1000
+    visual_refresh()
+    
+def plus10kgen():
+    global current_gen_no
+    current_gen_no += 10000
+    visual_refresh()
+
+def plus100kgen():
+    global current_gen_no
+    current_gen_no += 100000
+    visual_refresh()
+    
+
+def minus1gen():
+    global current_gen_no
+    if current_gen_no < 2:
+        pass
+    else:    
+        current_gen_no -= 1
+    visual_refresh()
+
+def minus10gen():
+    global current_gen_no
+    if current_gen_no < 11:
+        pass
+    else:
+        current_gen_no -= 10
+    visual_refresh()
+
+def minus100gen():
+    global current_gen_no
+    if current_gen_no < 101:
+        pass
+    else:       
+        current_gen_no -= 100
+    visual_refresh()
+
+def minus1kgen():
+    global current_gen_no
+    if current_gen_no < 1001:
+        pass
+    else:
+        current_gen_no -= 1000
+    visual_refresh()
+
+def minus10kgen():
+    global current_gen_no
+    if current_gen_no < 10001:
+        pass
+    else:
+        current_gen_no -= 10000
+    visual_refresh()
+
+def minus100kgen():
+    global current_gen_no
+    if current_gen_no < 100001:
+        pass
+    else:
+        current_gen_no -= 100000
+    visual_refresh()
+    
+def simulate_tk():
+    global home_name
+    if current_gen_no <10:
+        sim()
+        all_the_stats = "cmon"
+    else:
+        multisim(current_gen_no)
+    all_the_stats = "cmon"
+    result_visual_refresh()
+
+
+
+window = tk.Tk()
+
+title = tk.Frame(window)
+title.pack()
+
+
+number_gen = tk.Frame(window)
+number_gen.pack()
+
+number_gen1 = tk.Frame(window)
+number_gen1.pack()
+
+visual_number = tk.Label(window)
+visual_number.pack()
+visual_refresh()
+
+generator = tk.Frame(window)
+generator.pack()
+
+show_result = tk.Label(window)
+show_result.pack()
+result_visual_refresh()
+
+
+
+title_text = tk.Label(title, text = 'How many matches do you want to generate?').pack()
+
+current_gen = tk.Label(number_gen, text = 'No. of matches:  ').grid(row=0, column=0)
+
+plus_1 = tk.Button(number_gen1, text = '+1', command=plus1gen).grid(row=0, column=0)
+plus_10 = tk.Button(number_gen1, text = '+10', command=plus10gen).grid(row=0, column=1)
+plus_100 = tk.Button(number_gen1, text = '+100', command=plus100gen).grid(row=0, column=2)
+plus_1k = tk.Button(number_gen1, text = '+1k', command=plus1kgen).grid(row=0, column=3)
+plus_10k = tk.Button(number_gen1, text = '+10k', command=plus10kgen).grid(row=0, column=4)
+plus_100k = tk.Button(number_gen1, text = '+100k', command=plus100kgen).grid(row=0, column=5)
+
+minus_1 = tk.Button(number_gen1, text = '-1', command=minus1gen).grid(row=1, column=0)
+minus_10 = tk.Button(number_gen1, text = '-10', command=minus10gen).grid(row=1, column=1)
+minus_100 = tk.Button(number_gen1, text = '-100', command=minus100gen).grid(row=1, column=2)
+minus_1k = tk.Button(number_gen1, text = '-1k', command=minus1kgen).grid(row=1, column=3)
+minus_10k = tk.Button(number_gen1, text = '-10k', command=minus10kgen).grid(row=1, column=4)
+minus_100k = tk.Button(number_gen1, text = '-100k', command=minus100kgen).grid(row=1, column=5)
+
+generate = tk.Button(generator, text = 'Generate!', command = simulate_tk).pack()
+
+
+window.mainloop()
+
+
     
 continue_sim = True
 
@@ -560,6 +739,16 @@ while continue_sim == True:
 
     else:
         multisim(g)
+
+    continue_sim = False
+
+
+
+###
+
+
+
+
             
 
           
