@@ -2,72 +2,37 @@ import random
 import numpy as np
 import math
 
-#SIMULATOR BASIC 1.3.1
-        #new: Doncic pts primitive
+#SIMULATOR BASIC 1.5.
+        #new 1.5: More realistic results
+        #new 1.4: 2+1 & 3+1 plays, a bit smaller point anomalies
+        #new 1.4.2: useless 'possesion -1' removed
         #to do: OT betting, AH, all teams, player betting
 
 
-
-
-'''
-
-ODDS:
+print('''ODDS:
 
 To win (incl. OT):
 
 HOU 1.93
 DAL 1.97
 
-
-
 Match Total (incl. OT):
 
-179,5 U 8.00 | O 1.10
-189,5 U 4.30 | O 1.25
-199,5 U 2.75 | O 1.50
-204,5 U 2.25 | O 1.70
-209,5 U 1.93 | O 1.97
-214,5 U 1.70 | O 2.25
-219,5 U 1.50 | O 2.75
-229,5 U 1.25 | O 4.30
-239,5 U 1.11 | O 7.75
-249,5 U 1.05 | O 14.00
-
-
+179,5 U 25.00 | O 1.02
+189,5 U 12.00 | O 1.05
+199,5 U 6.00 | O 1.15
+204,5 U 4.00 | O 1.27
+209,5 U 2.90 | O 1.45
+214,5 U 2.20 | O 1.70
+219,5 U 1.80 | O 2.10
+229,5 U 1.30 | O 3.75
+239,5 U 1.10 | O 8.00
+249,5 U 1.04 | O 18.00
 
 Player Points (incl. OT):
 
-Luka Doncic 33,5
-U 1.91 | O 1.90 
-
-'''
-
-
-
-print('ODDS:')
-print('')
-print('To win (incl. OT): ')
-print('')
-print('HOU 1.93')
-print('DAL 1.97')
-print('')
-print('Match Total (incl. OT):')
-print('')
-print('179,5 U 8.00 | O 1.10')
-print('189,5 U 4.30 | O 1.25')
-print('199,5 U 2.75 | O 1.50')
-print('204,5 U 2.25 | O 1.70')
-print('209,5 U 1.93 | O 1.97')
-print('214,5 U 1.70 | O 2.25')
-print('219,5 U 1.50 | O 2.75')
-print('229,5 U 1.25 | O 4.30')
-print('239,5 U 1.11 | O 7.75')
-print('249,5 U 1.05 | O 14.00')
-print('')
-print('Player Points (incl. OT):')
-print('')
-print('Luka Doncic 33,5')
-print('U 1.91 | O 1.90')
+Luka Doncic 34,5
+U 1.90 | O 1.90''')
 
 
 
@@ -89,7 +54,7 @@ hatt_2ft = 0.1
 #hftacc = np.random.normal(0.795,0.159)
 
 havg_poss = 108.2
-hsigma = 4
+hsigma = 0.01*havg_poss
 
 hturnov = 0.141
 
@@ -105,7 +70,7 @@ aatt_2ft = 0.1
 #aftacc = np.random.normal(0.780,0.156)
 
 aavg_poss = 103.6
-asigma = 4
+asigma = 0.01*aavg_poss
 
 aturnov = 0.122
 
@@ -126,13 +91,13 @@ def sim(home_name='HOU', away_name='DAL'):
     global doncic_pts, doncic_max_pts
 
 
-    h3ptacc = np.random.normal(0.343,0.069)
-    h2ptacc = np.random.normal(0.558,0.112)
-    hftacc = np.random.normal(0.795,0.159)
-
-    a3ptacc = np.random.normal(0.362,0.072)
-    a2ptacc = np.random.normal(0.551,0.110)
-    aftacc = np.random.normal(0.780,0.156)
+##    h3ptacc = np.random.normal(0.343,0.069)
+##    h2ptacc = np.random.normal(0.558,0.112)
+##    hftacc = np.random.normal(0.795,0.159)
+##
+##    a3ptacc = np.random.normal(0.362,0.072)
+##    a2ptacc = np.random.normal(0.551,0.110)
+##    aftacc = np.random.normal(0.780,0.156)
     
     # Basic result variables
     Home_pts = Away_pts = 0
@@ -147,15 +112,21 @@ def sim(home_name='HOU', away_name='DAL'):
     Away_3pt_scored = Away_3pt_attempted = Away_2pt_scored = Away_2pt_attempted = 0
     Away_ft_scored = Away_ft_attempted = 0
 
-    Home_numb_poss = math.floor(int(np.random.normal(havg_poss,hsigma)))-1
-    Away_numb_poss = math.floor(int(np.random.normal(aavg_poss,asigma)))-1
+    Home_numb_poss = math.floor(int(np.random.normal(havg_poss,hsigma)))
+    Away_numb_poss = math.floor(int(np.random.normal(aavg_poss,asigma)))
     
     for i in range(Home_numb_poss):
+
+
+        aftacc = np.random.normal(0.780,0.5*0.156)
+
+
+        
         homeAction_tb = random.random()
         if homeAction_tb < hatt_3p*(1-hturnov):
-            Home_action = 1 #3pt attempt
+            Home_action = 1 #3pt attempt (+possible FT)
         elif homeAction_tb < (hatt_3p + hatt_2p)*(1-hturnov):
-            Home_action = 2 #2pt attempt
+            Home_action = 2 #2pt attempt (+possible FT)
         elif homeAction_tb < (hatt_3p + hatt_2p + hatt_3ft)*(1-hturnov):
             Home_action = 3 #3 free throws
         elif homeAction_tb < (1-hturnov):
@@ -164,29 +135,50 @@ def sim(home_name='HOU', away_name='DAL'):
             Home_action = 5 #turnover
             
         if Home_action == 1:
+            h3ptacc = np.random.normal(0.343,0.069)
             Home_3pt_attempted += 1
             Succ = random.random()
             if Succ < h3ptacc:                                      #ZUCC
                 Home_pts += 3
                 Home_3pt_scored += 1
-            pass
+                bonus_ft = random.random()
+                if bonus_ft > 0.9:
+                    Home_ft_attempted += 1
+                    hftacc = np.random.normal(0.795,0.5*0.159)
+                    Succ = random.random()
+                    if Succ < hftacc:
+                        Home_pts += 1
+                        Home_ft_scored += 1
+        
         elif Home_action == 2:
+            h2ptacc = np.random.normal(0.558,0.112)
             Home_2pt_attempted += 1
             Succ = random.random()
             if Succ < h2ptacc:
                 Home_pts += 2
                 Home_2pt_scored += 1
-            pass
+                bonus_ft = random.random()
+                if bonus_ft > 0.9:
+                    Home_ft_attempted += 1
+                    hftacc = np.random.normal(0.795,0.5*0.159)
+                    Succ = random.random()
+                    if Succ < hftacc:
+                        Home_pts += 1
+                        Home_ft_scored += 1
+
         elif Home_action == 3:
             Home_ft_attempted += 3
             for free_throw in range(3):
+                hftacc = np.random.normal(0.795,0.5*0.159)
                 Succ = random.random()
                 if Succ < hftacc:
                     Home_pts += 1
                     Home_ft_scored += 1
+                    
         elif Home_action == 4:
             Home_ft_attempted += 2
             for free_throw in range(2):
+                hftacc = np.random.normal(0.795,0.5*0.159)
                 Succ = random.random()
                 if Succ < hftacc:
                     Home_pts += 1
@@ -209,22 +201,41 @@ def sim(home_name='HOU', away_name='DAL'):
             Away_action = 5 #turnover
             
         if Away_action == 1:
+            a3ptacc = np.random.normal(0.362,0.072)
             Away_3pt_attempted +=1
             Succ = random.random()
             if Succ < a3ptacc:
                 Away_pts += 3
                 Away_3pt_scored +=1
-            pass
+                bonus_ft = random.random()
+                if bonus_ft > 0.9:
+                    Away_ft_attempted += 1
+                    aftacc = np.random.normal(0.780,0.5*0.156)
+                    Succ = random.random()
+                    if Succ < aftacc:
+                        Away_pts += 1
+                        Away_ft_scored += 1
+
         elif Away_action == 2:
+            a2ptacc = np.random.normal(0.551,0.110)
             Away_2pt_attempted +=1
             Succ = random.random()
             if Succ < a2ptacc:
                 Away_pts += 2
                 Away_2pt_scored += 1
-            pass
+                bonus_ft = random.random()
+                if bonus_ft > 0.9:
+                    Away_ft_attempted += 1
+                    aftacc = np.random.normal(0.780,0.5*0.156)
+                    Succ = random.random()
+                    if Succ < aftacc:
+                        Away_pts += 1
+                        Away_ft_scored += 1
+
         elif Away_action == 3:
             Away_ft_attempted += 3
             for free_throw in range(3):
+                aftacc = np.random.normal(0.780,0.5*0.156)
                 Succ = random.random()
                 if Succ < aftacc:
                     Away_pts += 1
@@ -233,6 +244,7 @@ def sim(home_name='HOU', away_name='DAL'):
         elif Away_action == 4:
             Away_ft_attempted += 2
             for free_throw in range(2):
+                aftacc = np.random.normal(0.780,0.5*0.156)
                 Succ = random.random()
                 if Succ < aftacc:
                     Away_pts += 1
@@ -268,8 +280,8 @@ def sim(home_name='HOU', away_name='DAL'):
 
     if is_draw == 1:   
         while is_draw == 1:
-            OT_Home_numb_poss = math.floor(int(0.104*np.random.normal(havg_poss,hsigma)))-1
-            OT_Away_numb_poss = math.floor(int(0.104*np.random.normal(aavg_poss,asigma)))-1
+            OT_Home_numb_poss = math.floor(int(0.104*np.random.normal(havg_poss,hsigma)))
+            OT_Away_numb_poss = math.floor(int(0.104*np.random.normal(aavg_poss,asigma)))
             OT_no += 1
             if OT_no > max_numb_OT:
                 max_numb_OT = OT_no
@@ -277,9 +289,9 @@ def sim(home_name='HOU', away_name='DAL'):
             for i in range(OT_Home_numb_poss):
                 homeAction_tb = random.random()
                 if homeAction_tb < hatt_3p*(1-hturnov):
-                    Home_action = 1 #3pt attempt
+                    Home_action = 1 #3pt attempt (+possible FT)
                 elif homeAction_tb < (hatt_3p + hatt_2p)*(1-hturnov):
-                    Home_action = 2 #2pt attempt
+                    Home_action = 2 #2pt attempt (+possible FT)
                 elif homeAction_tb < (hatt_3p + hatt_2p + hatt_3ft)*(1-hturnov):
                     Home_action = 3 #3 free throws
                 elif homeAction_tb < (1-hturnov):
@@ -288,29 +300,50 @@ def sim(home_name='HOU', away_name='DAL'):
                     Home_action = 5 #turnover
                     
                 if Home_action == 1:
+                    h3ptacc = np.random.normal(0.343,0.069)
                     Home_3pt_attempted += 1
                     Succ = random.random()
                     if Succ < h3ptacc:                                      #ZUCC
                         Home_pts += 3
                         Home_3pt_scored += 1
-                    pass
+                        bonus_ft = random.random()
+                        if bonus_ft > 0.9:
+                            Home_ft_attempted += 1
+                            hftacc = np.random.normal(0.795,0.5*0.159)
+                            Succ = random.random()
+                            if Succ < hftacc:
+                                Home_pts += 1
+                                Home_ft_scored += 1
+
                 elif Home_action == 2:
-                    Home_2pt_attempted += 1
+                    h2ptacc = np.random.normal(0.558,0.112)
+                    Home_2pt_attempted +=1
                     Succ = random.random()
                     if Succ < h2ptacc:
                         Home_pts += 2
                         Home_2pt_scored += 1
-                    pass
+                        bonus_ft = random.random()
+                        if bonus_ft > 0.9:
+                            Home_ft_attempted += 1
+                            hftacc = np.random.normal(0.795,0.5*0.159)
+                            Succ = random.random()
+                            if Succ < hftacc:
+                                Home_pts += 1
+                                Home_ft_scored += 1
+
                 elif Home_action == 3:
                     Home_ft_attempted += 3
                     for free_throw in range(3):
+                        hftacc = np.random.normal(0.795,0.5*0.159)
                         Succ = random.random()
                         if Succ < hftacc:
                             Home_pts += 1
                             Home_ft_scored += 1
+                            
                 elif Home_action == 4:
                     Home_ft_attempted += 2
                     for free_throw in range(2):
+                        hftacc = np.random.normal(0.795,0.5*0.159)
                         Succ = random.random()
                         if Succ < hftacc:
                             Home_pts += 1
@@ -333,22 +366,42 @@ def sim(home_name='HOU', away_name='DAL'):
                     Away_action = 5 #turnover
                     
                 if Away_action == 1:
+                    a3ptacc = np.random.normal(0.362,0.072)
                     Away_3pt_attempted +=1
                     Succ = random.random()
                     if Succ < a3ptacc:
                         Away_pts += 3
                         Away_3pt_scored +=1
-                    pass
+                        bonus_ft = random.random()
+                        if bonus_ft > 0.9:
+                            Away_ft_attempted += 1
+                            aftacc = np.random.normal(0.780,0.5*0.156)
+                            Succ = random.random()
+                            if Succ < aftacc:
+                                Away_pts += 1
+                                Away_ft_scored += 1
+
                 elif Away_action == 2:
+                    a2ptacc = np.random.normal(0.551,0.110)
                     Away_2pt_attempted +=1
                     Succ = random.random()
                     if Succ < a2ptacc:
                         Away_pts += 2
                         Away_2pt_scored += 1
-                    pass
+                        bonus_ft = random.random()
+                        if bonus_ft > 0.9:
+                            Away_ft_attempted += 1
+                            aftacc = np.random.normal(0.780,0.5*0.156)
+                            Succ = random.random()
+                            if Succ < aftacc:
+                                Away_pts += 1
+                                Away_ft_scored += 1
+
+                
                 elif Away_action == 3:
                     Away_ft_attempted += 3
                     for free_throw in range(3):
+                        aftacc = np.random.normal(0.780,0.5*0.156)
                         Succ = random.random()
                         if Succ < aftacc:
                             Away_pts += 1
@@ -357,6 +410,7 @@ def sim(home_name='HOU', away_name='DAL'):
                 elif Away_action == 4:
                     Away_ft_attempted += 2
                     for free_throw in range(2):
+                        aftacc = np.random.normal(0.780,0.5*0.156)
                         Succ = random.random()
                         if Succ < aftacc:
                             Away_pts += 1

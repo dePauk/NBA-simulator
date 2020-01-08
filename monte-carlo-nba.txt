@@ -1,0 +1,88 @@
+v1.3.1.
+
+1m Monte Carlo, posession sigma = 2 vs. 3 vs. 4 vs. 5
+
+sigma = 2
+
+HOU max: 194, HOU min: 32
+DAL max: 185, DAL min: 27
+ 
+HOU biggest win: +115  (189 : 74)
+DAL biggest win: +117  (52 : 169)
+Doncic max 78 pts
+ 
+Most OTs: 5, while the end score was 144 : 140
+ 
+
+
+
+sigma = 3
+
+HOU max: 194, HOU min: 31
+DAL max: 188, DAL min: 24
+ 
+HOU biggest win: +118  (154 : 36)
+DAL biggest win: +131  (42 : 173)
+Doncic max 80 pts
+ 
+Most OTs: 4, while the end score was 137 : 136
+
+
+
+sigma = 4
+
+HOU 504743, DAL 495257, draw 0
+
+ 
+HOU max: 197, HOU min: 29
+DAL max: 191, DAL min: 27
+ 
+HOU biggest win: +132  (167 : 35)
+DAL biggest win: +127  (51 : 178)
+Doncic max 85 pts
+ 
+Most OTs: 4, while the end score was 143 : 148
+
+
+v1.4 (2+1 & 3+1 plays)
+
+sigma = 2
+
+HOU max: 198, HOU min: 27
+DAL max: 194, DAL min: 30
+ 
+HOU biggest win: +123  (171 : 48)
+DAL biggest win: +114  (58 : 172)
+Doncic max 79 pts
+ 
+Most OTs: 4, while the end score was 143 : 139
+
+
+v1.4.1 fixed wrong -1 posession
+
+sigma = cca. 1 (10% posessions)
+
+HOU max: 198, HOU min: 20
+DAL max: 201, DAL min: 30
+ 
+HOU biggest win: +120  (174 : 54)
+DAL biggest win: +115  (76 : 191)
+Doncic max 86 pts
+ 
+Most OTs: 4, while the end score was 140 : 144
+
+
+v1.5. normal distribution before every shot (possible huge improvement)
+
+HOU 506071, DAL 493929, draw 0
+
+ 
+HOU max: 177, HOU min: 48
+DAL max: 178, DAL min: 49
+ 
+HOU biggest win: +83  (158 : 75)
+DAL biggest win: +93  (48 : 141)
+Doncic max 71 pts
+ 
+Most OTs: 5, while the end score was 164 : 178
+179,5 u61.03  o1.02   189,5 u16.67 o1.06   199,5 u6.12 o1.18   204,5 u4.12 o1.29   209,5 u2.94 o1.46   214,5 u2.23 o1.73   219,5 u1.8 o2.13   229,5 u1.32 o3.77   239,5 u1.12 o8.23   249,5 u1.04 o22.24

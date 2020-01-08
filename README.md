@@ -6,28 +6,28 @@ __sim('A','B')__: simulate any (change stats manually)
 __multisim()__: sim() or sim('A','B') multiple times + show anomalies
 
 
-# Odds:
+# Odds
+
 
 __To win (incl. OT):__
 
 HOU 1.93 <br/>
-DAL 1.97
-
+DAL 1.97 <br/>
 
 __Match Total (incl. OT):__
 
-179,5  U 8.00 | O 1.10 <br/>
-189,5  U 4.30 | O 1.25 <br/>
-199,5  U 2.75 | O 1.50 <br/>
-204,5  U 2.25 | O 1.70 <br/>
-209,5  U 1.93 | O 1.97 <br/>
-214,5  U 1.70 | O 2.25 <br/>
-219,5  U 1.50 | O 2.75 <br/>
-229,5  U 1.25 | O 4.30 <br/>
-239,5  U 1.11 | O 7.75 <br/>
-249,5  U 1.05 | O 14.00 <br/>
+179,5 U 25.00 | O 1.02 <br/>
+189,5 U 12.00 | O 1.05 <br/>
+199,5 U 6.00 | O 1.15 <br/>
+204,5 U 4.00 | O 1.27 <br/>
+209,5 U 2.90 | O 1.45 <br/>
+214,5 U 2.20 | O 1.70 <br/>
+219,5 U 1.80 | O 2.10 <br/>
+229,5 U 1.30 | O 3.75 <br/>
+239,5 U 1.10 | O 8.00 <br/>
+249,5 U 1.04 | O 18.00 <br/>
 
 __Player Points (incl. OT):__
 
-Luka Doncic 33,5 <br/>
-U 1.91 | O 1.90
+Luka Doncic 34,5 <br/>
+U 1.90 | O 1.90
