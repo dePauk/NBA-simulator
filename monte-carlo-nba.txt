@@ -1,3 +1,30 @@
+Early version
+
+#Monte Carlo 1m:
+    
+    #Avg points pg: 209.485996
+    
+    #HOU 505414, DAL 494586, draw 0
+    
+    #HOU max: 198, HOU min: 29
+    #DAL max: 201, DAL min: 31
+
+#Monte Carlo 10m @0.05 margin:
+    
+    #Avg points pg: 209.5538546
+
+    #HOU 5047863, DAL 4952137, draw 0
+
+    #HOU max: 209, HOU min: 25
+    #DAL max: 200, DAL min: 22
+
+    #Most OTs: 5 while the end score was 144 : 143
+        
+#179,5 u7.99  o1.13   189,5 u4.39 o1.27   199,5 u2.75 o1.52
+#204,5 u2.27 o1.71   209,5 u1.93 o1.97   214,5 u1.68 o2.32
+#219,5 u1.5 o2.8   229,5 u1.27 o4.43   239,5 u1.13 o7.83   249,5 u1.07 o15.52
+
+
 v1.3.1.
 
 1m Monte Carlo, posession sigma = 2 vs. 3 vs. 4 vs. 5

@@ -1,9 +1,11 @@
 # NBA-simulator
 
 __sim()__: simulate HOU-DAL with default stats <br/>
-__sim('A','B')__: simulate any (change stats manually)
+__sim('A','B')__: simulate any (change stats manually) <br/>
 
-__multisim()__: sim() or sim('A','B') multiple times + show anomalies
+__multisim()__: sim() multiple times + show anomalies <br/>
+
+<em>Input 'drama' to switch dramatic display ON/OFF </em>
 
 
 # Odds

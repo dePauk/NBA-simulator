@@ -1,11 +1,12 @@
 import random
 import numpy as np
 import math
+import time
 
-#SIMULATOR BASIC 1.5.
+#SIMULATOR BASIC 1.5.1
+        #new 1.5.1: On/off dramatic score display
         #new 1.5: More realistic results
-        #new 1.4: 2+1 & 3+1 plays, a bit smaller point anomalies
-        #new 1.4.2: useless 'possesion -1' removed
+
         #to do: OT betting, AH, all teams, player betting
 
 
@@ -13,33 +14,37 @@ print('''ODDS:
 
 To win (incl. OT):
 
-HOU 1.93
-DAL 1.97
+    HOU 1.93
+    DAL 1.97
 
 Match Total (incl. OT):
 
-179,5 U 25.00 | O 1.02
-189,5 U 12.00 | O 1.05
-199,5 U 6.00 | O 1.15
-204,5 U 4.00 | O 1.27
-209,5 U 2.90 | O 1.45
-214,5 U 2.20 | O 1.70
-219,5 U 1.80 | O 2.10
-229,5 U 1.30 | O 3.75
-239,5 U 1.10 | O 8.00
-249,5 U 1.04 | O 18.00
+    179,5 U 25.00 | O 1.02
+    189,5 U 12.00 | O 1.05
+    199,5 U 6.00 | O 1.15
+    204,5 U 4.00 | O 1.27
+    209,5 U 2.90 | O 1.45
+    214,5 U 2.20 | O 1.70
+    219,5 U 1.80 | O 2.10
+    229,5 U 1.30 | O 3.75
+    239,5 U 1.10 | O 8.00
+    249,5 U 1.04 | O 18.00
 
 Player Points (incl. OT):
 
-Luka Doncic 34,5
-U 1.90 | O 1.90''')
+    Luka Doncic 34,5
+    U 1.90 | O 1.90
+
+Input 'drama' to switch between ON/OFF dramatic result display
+
+''')
 
 
 
 Hou_wins = Dal_wins = Draws = max_numb_OT = 0
 quiet_sim = False
 odd_gen = False
-
+dramatic = False
 
 
 # Home team default (HOUSTON)
@@ -83,6 +88,8 @@ doncic_sigma = 0.05
 
 doncic_max_pts = 0
 
+Home_dram_poss = Away_dram_poss = 0
+
 
 def sim(home_name='HOU', away_name='DAL'):
     global Home_pts, Away_pts, Home_numb_poss
@@ -116,10 +123,6 @@ def sim(home_name='HOU', away_name='DAL'):
     Away_numb_poss = math.floor(int(np.random.normal(aavg_poss,asigma)))
     
     for i in range(Home_numb_poss):
-
-
-        aftacc = np.random.normal(0.780,0.5*0.156)
-
 
         
         homeAction_tb = random.random()
@@ -450,25 +453,43 @@ def sim(home_name='HOU', away_name='DAL'):
            
     
     if quiet_sim == False:
-        print ('')
-        print ('%s %s : %s %s' %(home_name, Home_pts, Away_pts, away_name))
-        if OT_no > 0:
-            print ('after %s overtime(s)' % OT_no)
-        print ('')
-        print ('%s %s/%s 3pt, %s/%s 2pt, %s/%s ft, %s turnovers' %
+        if dramatic == False:
+            print('')
+            print ('%s %s : %s %s' %(home_name, Home_pts, Away_pts, away_name))
+            if OT_no > 0:
+                print ('after %s overtime(s)' % OT_no)
+            print ('')
+            print ('%s %s/%s 3pt, %s/%s 2pt, %s/%s ft, %s turnovers' %
                (home_name, Home_3pt_scored, Home_3pt_attempted, Home_2pt_scored, Home_2pt_attempted,
                Home_ft_scored, Home_ft_attempted, Home_turnovers))
-        print ('%s %s/%s 3pt, %s/%s 2pt, %s/%s ft, %s turnovers' %
+            print ('%s %s/%s 3pt, %s/%s 2pt, %s/%s ft, %s turnovers' %
                (away_name, Away_3pt_scored, Away_3pt_attempted, Away_2pt_scored, Away_2pt_attempted,
                Away_ft_scored, Away_ft_attempted, Away_turnovers))
-        print ('Doncic %s pts' % (doncic_pts))
+            print ('Doncic %s pts' % (doncic_pts))
         
-    pass
+        elif dramatic == True:
+            print ('''Dramatic score enabled
+                                                ''')
+            time.sleep(2)
+            print ('%s %s/%s 3pt, %s/%s 2pt, %s/%s ft, %s turnovers' %
+               (home_name, Home_3pt_scored, Home_3pt_attempted, Home_2pt_scored, Home_2pt_attempted,
+               Home_ft_scored, Home_ft_attempted, Home_turnovers))
+            time.sleep(1)
+            print ('%s %s/%s 3pt, %s/%s 2pt, %s/%s ft, %s turnovers' %
+               (away_name, Away_3pt_scored, Away_3pt_attempted, Away_2pt_scored, Away_2pt_attempted,
+               Away_ft_scored, Away_ft_attempted, Away_turnovers))
+            time.sleep(1)
+            print ('Doncic %s pts' % (doncic_pts))
+            time.sleep(1)
+            print ('')
+            print ('%s: %s' %(home_name, Home_pts))
+            time.sleep(3)
+            print ('%s: %s' %(away_name, Away_pts))
+            if OT_no > 0:
+                print ('after %s overtime(s)' % OT_no)
 
+            
 most_OT_home = most_OT_away = max_numb_OT = 0
-
-
-
 
 
 
@@ -601,47 +622,38 @@ def multisim(number):
     
     quiet_sim = False
     
-    
 
-#Monte Carlo 1m:
-    
-    #Avg points pg: 209.485996
-    
-    #HOU 505414, DAL 494586, draw 0
-    
-    #HOU max: 198, HOU min: 29
-    #DAL max: 201, DAL min: 31
-
-#Monte Carlo 10m @0.05 margin:
-    
-    #Avg points pg: 209.5538546
-
-    #HOU 5047863, DAL 4952137, draw 0
-
-    #HOU max: 209, HOU min: 25
-    #DAL max: 200, DAL min: 22
-
-    #Most OTs: 5 while the end score was 144 : 143
-        
-#179,5 u7.99  o1.13   189,5 u4.39 o1.27   199,5 u2.75 o1.52
-#204,5 u2.27 o1.71   209,5 u1.93 o1.97   214,5 u1.68 o2.32
-#219,5 u1.5 o2.8   229,5 u1.27 o4.43   239,5 u1.13 o7.83   249,5 u1.07 o15.52
     
 continue_sim = True
 
 while continue_sim == True:
-    print(' ')
-    g = int(input('How many simulations do you want to generate? '))
-    print(' ')
-
-    if g < 10:
-        for i in range(g):
-            sim()
-            print(' ')
-            print(' ')
-
+    #print(' ')
+    g1 = input('How many simulations do you want to generate? ')
+    if g1 == 'drama' and dramatic == True:
+        dramatic = False
+        print ('Dramatic display OFF')
+    elif g1 == 'drama' and dramatic == False:
+        dramatic = True
+        print ('Dramatic display ON')      
     else:
-        multisim(g)
+        g = int(g1)
+        print(' ')
+        if g != 1 and dramatic == True:
+            dramatic = False
+            print ('''Dramatic only available for 1 match
+Dramatic display OFF
+                   ''')
+            
+    
+
+        if g < 10:
+            for i in range(g):
+                sim()
+                print(' ')
+                print(' ')
+
+        else:
+            multisim(g)
             
 
           
