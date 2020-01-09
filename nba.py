@@ -3,7 +3,8 @@ import numpy as np
 import math
 import time
 
-#SIMULATOR BASIC 1.5.1
+#SIMULATOR BASIC 1.5.2
+        #new 1.5.2: Indents in display 
         #new 1.5.1: On/off dramatic score display
         #new 1.5: More realistic results
 
@@ -457,15 +458,15 @@ def sim(home_name='HOU', away_name='DAL'):
             print('')
             print ('%s %s : %s %s' %(home_name, Home_pts, Away_pts, away_name))
             if OT_no > 0:
-                print ('after %s overtime(s)' % OT_no)
+                print (' '*4 + 'after %s overtime(s)' % OT_no)
             print ('')
-            print ('%s %s/%s 3pt, %s/%s 2pt, %s/%s ft, %s turnovers' %
+            print (' '*4 + '%s %s/%s 3pt, %s/%s 2pt, %s/%s ft, %s turnovers' %
                (home_name, Home_3pt_scored, Home_3pt_attempted, Home_2pt_scored, Home_2pt_attempted,
                Home_ft_scored, Home_ft_attempted, Home_turnovers))
-            print ('%s %s/%s 3pt, %s/%s 2pt, %s/%s ft, %s turnovers' %
+            print (' '*4 + '%s %s/%s 3pt, %s/%s 2pt, %s/%s ft, %s turnovers' %
                (away_name, Away_3pt_scored, Away_3pt_attempted, Away_2pt_scored, Away_2pt_attempted,
                Away_ft_scored, Away_ft_attempted, Away_turnovers))
-            print ('Doncic %s pts' % (doncic_pts))
+            print (' '*4 + 'Doncic %s pts' % (doncic_pts))
         
         elif dramatic == True:
             print ('''Dramatic score enabled
@@ -475,18 +476,18 @@ def sim(home_name='HOU', away_name='DAL'):
                (home_name, Home_3pt_scored, Home_3pt_attempted, Home_2pt_scored, Home_2pt_attempted,
                Home_ft_scored, Home_ft_attempted, Home_turnovers))
             time.sleep(1)
-            print ('%s %s/%s 3pt, %s/%s 2pt, %s/%s ft, %s turnovers' %
+            print (' '*4 + '%s %s/%s 3pt, %s/%s 2pt, %s/%s ft, %s turnovers' %
                (away_name, Away_3pt_scored, Away_3pt_attempted, Away_2pt_scored, Away_2pt_attempted,
                Away_ft_scored, Away_ft_attempted, Away_turnovers))
             time.sleep(1)
-            print ('Doncic %s pts' % (doncic_pts))
+            print (' '*4 + 'Doncic %s pts' % (doncic_pts))
             time.sleep(1)
             print ('')
-            print ('%s: %s' %(home_name, Home_pts))
+            print (' '*4 + '%s: %s' %(home_name, Home_pts))
             time.sleep(3)
             print ('%s: %s' %(away_name, Away_pts))
             if OT_no > 0:
-                print ('after %s overtime(s)' % OT_no)
+                print (' '*4 + 'after %s overtime(s)' % OT_no)
 
             
 most_OT_home = most_OT_away = max_numb_OT = 0
@@ -603,17 +604,16 @@ def multisim(number):
     print ('')
     print ('HOU %s, DAL %s, draw %s' % (Hou_wins, Dal_wins, Draws))
     print ('')
+    print (' '*4 + 'HOU max: %s, HOU min: %s' % (Hou_max, Hou_min))
+    print (' '*4 + 'DAL max: %s, DAL min: %s' % (Dal_max, Dal_min))
     print (' ')
-    print ('HOU max: %s, HOU min: %s' % (Hou_max, Hou_min))
-    print ('DAL max: %s, DAL min: %s' % (Dal_max, Dal_min))
-    print (' ')
-    print ('HOU biggest win: +%s  (%s : %s)' % (Hou_ez,Hou_ez_Hou, Hou_ez_Dal))
-    print ('DAL biggest win: +%s  (%s : %s)' % (Dal_ez, Dal_ez_Hou, Dal_ez_Dal))
-    print ('Doncic max %s pts' % (doncic_max_pts))
+    print (' '*4 + 'HOU biggest win: +%s  (%s : %s)' % (Hou_ez,Hou_ez_Hou, Hou_ez_Dal))
+    print (' '*4 + 'DAL biggest win: +%s  (%s : %s)' % (Dal_ez, Dal_ez_Hou, Dal_ez_Dal))
+    print (' '*4 + 'Doncic max %s pts' % (doncic_max_pts))
     print (' ')
     
     if max_numb_OT > 0:
-        print ('Most OTs: %s, while the end score was %s : %s' % (max_numb_OT, most_OT_home, most_OT_away))
+        print (' '*4 + 'Most OTs: %s, while the end score was %s : %s' % (max_numb_OT, most_OT_home, most_OT_away))
     #print ('Avg points pg: %s' % avg_pts)
     if odd_gen == True:
         print ('179,5 u%s  o%s   189,5 u%s o%s   199,5 u%s o%s   204,5 u%s o%s   209,5 u%s o%s   214,5 u%s o%s   219,5 u%s o%s   229,5 u%s o%s   239,5 u%s o%s   249,5 u%s o%s' %
@@ -628,7 +628,7 @@ continue_sim = True
 
 while continue_sim == True:
     #print(' ')
-    g1 = input('How many simulations do you want to generate? ')
+    g1 = input('How many simulations do you want to generate (or use command)?')
     if g1 == 'drama' and dramatic == True:
         dramatic = False
         print ('Dramatic display OFF')
